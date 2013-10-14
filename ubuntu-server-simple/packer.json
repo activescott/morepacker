@@ -1,0 +1,31 @@
+{
+	"variables": {
+		"ISO_DIR":"",
+		"VM_USER": "packer",
+		"VM_PASSWORD": "packer"
+	},
+	"builders": [{
+			"name": "my-ubuntu-vmware",
+			"type": "vmware",
+			"iso_url": "{{user `ISO_DIR`}}/ubuntu-12.04.3-server-amd64.iso",
+			"iso_checksum": "2cbe868812a871242cdcdd8f2fd6feb9",
+			"iso_checksum_type": "md5",
+			"ssh_username": "{{user `VM_USER`}}",
+			"ssh_password": "{{user `VM_PASSWORD`}}",
+			"ssh_wait_timeout": "10m",
+			"shutdown_command": "echo {{user `VM_PASSWORD`}} | sudo -S shutdown -P now",
+			"http_directory": "http",
+			"boot_wait": "5s",
+			"boot_command": [
+				"<esc><esc><enter><wait>",
+				"/install/vmlinuz noapic ",
+				"preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/mypreseed.cfg ",
+				"debian-installer=en_US auto locale=en_US kbd-chooser/method=us ",
+				"hostname={{ .Name }} ",
+				"fb=false debconf/frontend=noninteractive ",
+				"keyboard-configuration/modelcode=SKIP keyboard-configuration/layout=USA ",
+				"keyboard-configuration/variant=USA console-setup/ask_detect=false ",
+				"initrd=/install/initrd.gz -- <enter>"
+			]
+	}]
+}
