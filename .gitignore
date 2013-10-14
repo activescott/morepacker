@@ -1,2 +1,5 @@
-.DS_Store
-ubuntu-server-simple/output-my-ubuntu-vmware
+/iso
+/.DS_Store
+/ubuntu-server-simple/output-my-ubuntu-vmware
+/win2008r2-standard/output-my-win2008R2-std-vmware
+packer_cache
