@@ -1,13 +1,14 @@
 # Packer templates
 Templates for packer (http://packer.io).
 
-##Misc References & Notes
+## Misc References & Notes
 Last working with packer v0.3.9.
 
 ### Packer Notes
 - General example with vmware+ubuntu automatic install: http://www.packer.io/docs/builders/vmware.html
 - Walkthrough of Ubuntu setup: http://kappataumu.com/articles/creating-an-Ubuntu-VM-with-packer.html
 - NOTE: When using vmware builder, packer spins up a HTTP server and seeds a ubuntu cfg preseed file. Explained under the http_directory setting at http://www.packer.io/docs/builders/vmware.html
+- Google group (search it!): https://groups.google.com/forum/#!forum/packer-tool
 
 ### Ubuntu-Specific notes
 - Details on how to setup and actually use a preseed: https://help.ubuntu.com/12.04/installation-guide/amd64/preseed-using.html

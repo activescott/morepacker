@@ -1,13 +1,12 @@
 {
 	"variables": {
-		"ISO_DIR":"",
 		"VM_USER": "packer",
 		"VM_PASSWORD": "packer"
 	},
 	"builders": [{
 			"name": "my-ubuntu-vmware",
 			"type": "vmware",
-			"iso_url": "{{user `ISO_DIR`}}/ubuntu-12.04.3-server-amd64.iso",
+			"iso_url": "../iso/ubuntu-12.04.3-server-amd64.iso",
 			"iso_checksum": "2cbe868812a871242cdcdd8f2fd6feb9",
 			"iso_checksum_type": "md5",
 			"ssh_username": "{{user `VM_USER`}}",
