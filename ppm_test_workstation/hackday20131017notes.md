@@ -36,3 +36,15 @@ TODO
 - Role cookbook for test-workstation?
      - 
 - fork morepacker to daptiv-specific repo.
+
+
+
+
+
+-
+NOTE: 
+"_comment":
+"cookbook_paths won't work for us since we're using cmd.exe via ssh (MichaelM explained cookbooks don't like being run directly from cygwin/ssh, so i'm using cmd.exe) and the solo.rb has a posix path in it (since packer is using SSH) and chef can't find the cookbook dir. So we use a file provioner above to uplaod cookbooks and a config_template below to templetize solo.rb (whichseems useful in it's own right)",
+
+
+"_comment": "upload cookbooks to /tmp/cookbooks (which is going to be c:\\cygwin\\tmp\\cookbooks) - we'll use this path in our config_template below",

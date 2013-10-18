@@ -27,12 +27,20 @@
 			"http_directory": "http",
 			"boot_wait": "5s"
 	}],
-	"provisioners": [{
+	"provisioners": [
+		{
+			"type": "file",
+			"source": "/Users/swilleke/src/chef-repo/cookbooks",
+			"destination": "/tmp"
+		},
+		{
 			"type": "chef-solo",
 			"install_command": "cd /tmp && curl -L https://opscode-omnibus-packages.s3.amazonaws.com/windows/2008r2/x86_64/chef-client-11.4.4-2.windows.msi > /tmp/chef-client-11.4.4-2.windows.msi && msiexec /qn /I chef-client-11.4.4-2.windows.msi /Lime chef-client-11.4.4-2.windows.msi.log",
-			"execute_command": "cmd.exe /C c:\\opscode\\chef\\bin\\chef-solo.bat --no-color -c {{.ConfigPath}} -j {{.JsonPath}}",
-			"cookbook_paths": [ "/Users/swilleke/src/chef-repo/cookbooks/" ],
-			"run_list": [ "7-zip::default" ]
+			"execute_command": "cmd.exe /C c:\\\\opscode\\\\chef\\\\bin\\\\chef-solo --no-color -c \"$(cygpath -aw {{.ConfigPath}})\" -j \"$(cygpath -aw {{.JsonPath}})\"",
+			"config_template": "templates/mysolo.rb",
+			"json": {
+				"run_list": [ "7-zip::default" ]
+			}
 		}
 	]
 }
