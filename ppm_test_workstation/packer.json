@@ -1,0 +1,38 @@
+{
+	"variables": {
+		"ISO_DIR":"",
+		"VM_USER": "vagrant",
+		"VM_PASSWORD": "vagrant"
+	},
+	"builders": [{
+			"name": "packer_ppm_test_workstation",
+			"type": "vmware",
+			"guest_os_type": "windows7srv-64",
+			"iso_url": "../iso/SW_DVD5_Windows_Svr_DC_EE_SE_Web_2008_R2_64Bit_English_w_SP1_MLF_X17-22580.ISO",
+			"iso_checksum": "8d397b69135d207452a78c3c3051339d",
+			"iso_checksum_type": "md5",
+			"ssh_username": "{{user `VM_USER`}}",
+			"ssh_password": "{{user `VM_PASSWORD`}}",
+			"ssh_wait_timeout": "60m",
+			"floppy_files": ["floppy/Autounattend.xml", "floppy/set-power-config.bat", "floppy/install-cygwin-sshd.bat"],
+			"tools_upload_flavor": "windows",
+      		"tools_upload_path": "/cygdrive/c/Users/vagrant/{{.Flavor}}.iso",
+			"shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
+			"disk_size": 40960,
+			"vmx_data": {
+				"memsize": "768",
+				"numvcpus": "1",
+				"cpuid.coresPerSocket": "1"
+			},
+			"http_directory": "http",
+			"boot_wait": "5s"
+	}],
+	"provisioners": [{
+			"type": "chef-solo",
+			"install_command": "cd /tmp && curl -L https://opscode-omnibus-packages.s3.amazonaws.com/windows/2008r2/x86_64/chef-client-11.4.4-2.windows.msi > /tmp/chef-client-11.4.4-2.windows.msi && msiexec /qn /I chef-client-11.4.4-2.windows.msi /Lime chef-client-11.4.4-2.windows.msi.log",
+			"execute_command": "cmd.exe /C c:\\opscode\\chef\\bin\\chef-solo.bat --no-color -c {{.ConfigPath}} -j {{.JsonPath}}",
+			"cookbook_paths": [ "/Users/swilleke/src/chef-repo/cookbooks/" ],
+			"run_list": [ "7-zip::default" ]
+		}
+	]
+}
