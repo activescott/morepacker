@@ -56,6 +56,9 @@ set PACKAGES=%PACKAGES%,termcap
 set PACKAGES=%PACKAGES%,terminfo
 set PACKAGES=%PACKAGES%,wget
 set PACKAGES=%PACKAGES%,zlib0
+REM curl is useful for installing apt-cyg which can pull other packages
+set PACKAGES=%PACKAGES%,curl
+
 
 REM run the installation
 %SystemDrive%\cygwin\cygwin-setup.exe -a %ARCH% -q -R %SystemDrive%\cygwin -P %PACKAGES% -s http://cygwin.mirrors.pair.com
