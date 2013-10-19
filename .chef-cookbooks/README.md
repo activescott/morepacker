@@ -1,0 +1,1 @@
+Put cookbook directories (or links) in this directory.

@@ -1,5 +1,8 @@
-/iso
-/.DS_Store
+.DS_Store
+packer_cache
+packer.log
+output-vmware
+/.iso
+/.chef-cookbooks
 /ubuntu-server-simple/output-my-ubuntu-vmware
 /win2008r2-standard/output-my-win2008R2-std-vmware
-packer_cache

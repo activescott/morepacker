@@ -1,14 +1,12 @@
 {
 	"variables": {
-		"ISO_DIR":"",
 		"VM_USER": "vagrant",
 		"VM_PASSWORD": "vagrant"
 	},
 	"builders": [{
-			"name": "packer_ppm_test_workstation",
 			"type": "vmware",
 			"guest_os_type": "windows7srv-64",
-			"iso_url": "../iso/SW_DVD5_Windows_Svr_DC_EE_SE_Web_2008_R2_64Bit_English_w_SP1_MLF_X17-22580.ISO",
+			"iso_url": "../.iso/SW_DVD5_Windows_Svr_DC_EE_SE_Web_2008_R2_64Bit_English_w_SP1_MLF_X17-22580.ISO",
 			"iso_checksum": "8d397b69135d207452a78c3c3051339d",
 			"iso_checksum_type": "md5",
 			"ssh_username": "{{user `VM_USER`}}",
@@ -30,7 +28,7 @@
 	"provisioners": [
 		{
 			"type": "file",
-			"source": "/Users/swilleke/src/chef-repo/cookbooks",
+			"source": "../.chef-cookbooks",
 			"destination": "/tmp"
 		},
 		{

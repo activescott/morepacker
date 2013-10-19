@@ -1,0 +1,1 @@
+cookbook_path	["c:\\cygwin\\tmp\\.chef-cookbooks"]
