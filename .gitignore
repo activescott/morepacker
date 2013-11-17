@@ -4,5 +4,5 @@ packer.log
 output-vmware
 /.iso
 /.chef-cookbooks
-/ubuntu-server-simple/output-my-ubuntu-vmware
+/ubuntu-12.04.3-server/output-ubuntu-server
 /win2008r2-standard/output-my-win2008R2-std-vmware
