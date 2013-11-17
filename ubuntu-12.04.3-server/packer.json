@@ -4,7 +4,7 @@
 		"VM_PASSWORD": "packer"
 	},
 	"builders": [{
-			"name": "my-ubuntu-vmware",
+			"name": "ubuntu-server",
 			"type": "vmware",
 			"iso_url": "../.iso/ubuntu-12.04.3-server-amd64.iso",
 			"iso_checksum": "2cbe868812a871242cdcdd8f2fd6feb9",
