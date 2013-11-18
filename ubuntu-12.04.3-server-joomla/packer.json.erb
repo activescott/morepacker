@@ -1,0 +1,41 @@
+<%
+	##########
+	# This is an erb template for a packer json file. 
+	# Use ruby's erb command to generate a template with the following command:
+	#  `erb packer.json.erb > packer.json`
+	##########
+	require 'json'
+
+	def to_json(obj, tab_count=2)
+		result=""
+		indent_line = false
+		JSON.pretty_generate(obj).each_line do |l| 
+			if indent_line
+				result += "\t" * tab_count
+			end
+			result += l
+			indent_line = true
+		end
+		
+		result
+	end
+
+	# load the base template:
+	parent = Dir.chdir("..") { Dir.pwd }
+	packer_str = IO.read(parent + "/ubuntu-12.04.3-server/packer.json")
+	base = JSON.parse(packer_str)
+	
+	# changes to base template:
+	base["builders"][0]["name"] = "joomla-server"
+%>
+
+{
+	"variables": <%= to_json(base["variables"]) %>,
+	"builders": <%= to_json(base["builders"]) %>,
+	"provisioners": [
+		{
+			"type": "shell",
+			"script": "provision_joomla.sh"
+		}
+	]
+}
