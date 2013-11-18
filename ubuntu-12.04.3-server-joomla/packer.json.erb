@@ -34,8 +34,13 @@
 	"builders": <%= to_json(base["builders"]) %>,
 	"provisioners": [
 		{
+			"type": "file",
+			"source": "upload",
+			"destination": "~/"
+		},
+		{
 			"type": "shell",
-			"script": "provision_joomla.sh"
+			"inline": [ "echo '{{user `VM_PASSWORD`}}' | ~/upload/provision_joomla.sh" ]
 		}
 	]
 }
