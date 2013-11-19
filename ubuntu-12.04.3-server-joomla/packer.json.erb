@@ -35,12 +35,15 @@
 	"provisioners": [
 		{
 			"type": "file",
-			"source": "upload",
-			"destination": "~/"
+			"source": "upload/",
+			"destination": "/tmp/packer/"
 		},
 		{
 			"type": "shell",
-			"inline": [ "echo '{{user `VM_PASSWORD`}}' | ~/upload/provision_joomla.sh" ]
+			"inline": [
+				"chmod +x /tmp/packer/provision_joomla.sh",
+				"echo '{{user `VM_PASSWORD`}}' | sudo -ES bash '/tmp/packer/provision_joomla.sh'"
+			]
 		}
 	]
 }
