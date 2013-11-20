@@ -39,7 +39,12 @@ MYSQL_DB=$4
 [ $MYSQL_USER ] || die "Specify mysql user with MYSQL_USER environment variable!"
 [ $MYSQL_PW ] || die "Specify mysql password with MYSQL_PW environment variable!"
 [ $MYSQL_DB ] || die "Specify mysql database to create/use with MYSQL_DB environment variable!"
-[ -f "joomla-apache-config.conf" ] || die "Ensure that joomla-apache-config.conf to be in the same directory as this script!"
+
+# get the script's current directory: 
+MYDIR="$( dirname "$0" )"  # "$( cd "$( dirname "$0" )" && pwd )"
+echo "Script executing from \"$MYDIR\""
+
+[ -f "$MYDIR/joomla-apache-config.conf" ] || die "Ensure that joomla-apache-config.conf is in the same directory as this script!"
 
 apt-get update
 
@@ -77,7 +82,7 @@ a2enmod rewrite
 # Create the site's dir: 
 mkdir /var/www/joomla-site
 # Configure the site in apache according to https://help.ubuntu.com/12.04/serverguide/httpd.html
-cp joomla-apache-config.conf /etc/apache2/sites-available/
+cp $MYDIR/joomla-apache-config.conf /etc/apache2/sites-available/
 ln -s /etc/apache2/sites-available/joomla-apache-config.conf /etc/apache2/sites-enabled/joomla-apache-config.conf 
 
 # restart apache

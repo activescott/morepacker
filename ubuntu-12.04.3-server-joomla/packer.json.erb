@@ -27,6 +27,10 @@
 	
 	# changes to base template:
 	base["builders"][0]["name"] = "joomla-server"
+	# NOTE: nil means "required" - http://www.packer.io/docs/templates/user-variables.html
+	base["variables"]["MYSQL_USER"] = nil 
+	base["variables"]["MYSQL_PASSWORD"] = nil
+	base["variables"]["MYSQL_DATABASE"] = nil
 %>
 
 {
@@ -35,14 +39,14 @@
 	"provisioners": [
 		{
 			"type": "file",
-			"source": "upload/",
-			"destination": "/tmp/packer/"
+			"source": "upload",
+			"destination": "/tmp"
 		},
 		{
 			"type": "shell",
 			"inline": [
-				"chmod +x /tmp/packer/provision_joomla.sh",
-				"echo '{{user `VM_PASSWORD`}}' | sudo -ES bash '/tmp/packer/provision_joomla.sh'"
+				"echo '{{user `VM_PASSWORD`}}' | sudo -ES chmod +x '/tmp/upload/provision_joomla.sh'",
+				"echo '{{user `VM_PASSWORD`}}' | sudo -ES bash '/tmp/upload/provision_joomla.sh' '{{user `VM_PASSWORD`}}' '{{user `MYSQL_USER`}}' '{{user `MYSQL_PASSWORD`}}' '{{user `MYSQL_DATABASE`}}'"
 			]
 		}
 	]
