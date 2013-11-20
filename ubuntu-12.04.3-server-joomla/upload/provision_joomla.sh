@@ -5,21 +5,26 @@
 # RUN this on the machine that is to run joomla!!
 ##########
 
-function show_usage() {
+function show_help() {
 	echo "provision_joomla.sh MYSQL_ROOTPW MYSQL_USER MYSQL_PW MYSQL_DB"
-	echo " MYSQL_ROOTPW:	Password to use for the mysql root user."
-	echo " MYSQL_USER:	The name of the user to provision in mysql used for joomla."
-	echo " MYSQL_PW:	The password for the mysql user."
-	echo " MYSQL_DB:	The name of the database to create in mysql that joomla will use."
+	echo "    MYSQL_ROOTPW: Password to use for the mysql root user."
+	echo "    MYSQL_USER:   The name of the user to provision in mysql used for joomla."
+	echo "    MYSQL_PW:     catThe password for the mysql user."
+	echo "    MYSQL_DB:     The name of the database to create in mysql that joomla will use."
+}
+
+die () {
+	show_help
+	echo >&2 "$@"
+	exit 1
 }
 
 function require_sudo() {
 	if [ `id -u` -eq 0 ]
 	then
-		echo "\nRunning as sudo..."
+		echo "Running as sudo..."
 	else
-		echo "Must run this script with sudo!"
-		exit 1
+		die "This script must be run as super user (i.e with sudo)!"
 	fi
 }
 
@@ -30,36 +35,11 @@ MYSQL_USER=$2
 MYSQL_PW=$3
 MYSQL_DB=$4
 
-if [ ! $MYSQL_ROOTPW ]; then
-	echo "MYSQL_ROOTPW=\"$MYSQL_ROOTPW\""
-	show_usage
-	echo "Specify mysql root password with MYSQL_ROOTPW environment variable!"
-	exit 1
-fi
-
-if [ ! $MYSQL_USER ]; then
-	show_usage
-	echo "Specify mysql user with MYSQL_USER environment variable!"
-	exit 1
-fi
-
-if [ ! $MYSQL_PW ]; then
-	show_usage
-	echo "Specify mysql password with MYSQL_PW environment variable!"
-	exit 1
-fi
-
-if [ ! $MYSQL_DB ]; then
-	show_usage
-	echo "Specify mysql database to create/use with MYSQL_DB environment variable!"
-	exit 1
-fi
-
-if [ ! -f "joomla-apache-config.conf" ]; then
-	show_usage
-	echo "Ensure that joomla-apache-config.conf to be in the same directory as this script!"
-	exit 2;
-fi
+[ $MYSQL_ROOTPW ] || die "Specify mysql root password with MYSQL_ROOTPW environment variable!"
+[ $MYSQL_USER ] || die "Specify mysql user with MYSQL_USER environment variable!"
+[ $MYSQL_PW ] || die "Specify mysql password with MYSQL_PW environment variable!"
+[ $MYSQL_DB ] || die "Specify mysql database to create/use with MYSQL_DB environment variable!"
+[ -f "joomla-apache-config.conf" ] || die "Ensure that joomla-apache-config.conf to be in the same directory as this script!"
 
 apt-get update
 
