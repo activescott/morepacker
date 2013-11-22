@@ -37,6 +37,7 @@
 	"variables": <%= to_json(base["variables"]) %>,
 	"builders": <%= to_json(base["builders"]) %>,
 	"provisioners": [
+		<% # Note: Using file+inline instead of normal scripts because provision_joomla needs other files in the same dir and need to pass args to other scripts %>
 		{
 			"type": "file",
 			"source": "upload",
@@ -44,10 +45,15 @@
 		},
 		{
 			"type": "shell",
-			"inline": [
-				"echo '{{user `VM_PASSWORD`}}' | sudo -ES chmod +x '/tmp/upload/provision_joomla.sh'",
-				"echo '{{user `VM_PASSWORD`}}' | sudo -ES bash '/tmp/upload/provision_joomla.sh' '{{user `VM_PASSWORD`}}' '{{user `MYSQL_USER`}}' '{{user `MYSQL_PASSWORD`}}' '{{user `MYSQL_DATABASE`}}'"
-			]
+			"inline": [ 
+				<% # Set user as sudo w/o password required (this is useful to rsync files to the /etc/... directories later) %>
+				"chmod +x '/tmp/upload/setup_users.sh'",
+				"bash '/tmp/upload/setup_users.sh' '{{user `VM_USER`}}'",
+				<% # Main joomla provisioning script. Work done here. %>
+				"chmod +x '/tmp/upload/provision_joomla.sh'",
+				"bash '/tmp/upload/provision_joomla.sh' '{{user `VM_PASSWORD`}}' '{{user `MYSQL_USER`}}' '{{user `MYSQL_PASSWORD`}}' '{{user `MYSQL_DATABASE`}}'"
+			],
+			"execute_command": "echo '{{user `VM_PASSWORD`}}'|{{.Vars}} sudo -E -S bash '{{.Path}}'"
 		}
-	]
+	]	
 }
