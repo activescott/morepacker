@@ -28,7 +28,7 @@ MYSQL_DATABASE=$3
 #PACKER_DEBUG=-debug #set it to empty to turn off debug.
 
 packer build $PACKER_DEBUG \
-	-var 'MYSQL_USER=$MYSQL_USER' \
-	-var 'MYSQL_PASSWORD=$MYSQL_PASSWORD' \
-	-var 'MYSQL_DATABASE=$MYSQL_DATABASE' \
+	-var "MYSQL_USER=$MYSQL_USER" \
+	-var "MYSQL_PASSWORD=$MYSQL_PASSWORD" \
+	-var "MYSQL_DATABASE=$MYSQL_DATABASE" \
 	packer.json.tmp
