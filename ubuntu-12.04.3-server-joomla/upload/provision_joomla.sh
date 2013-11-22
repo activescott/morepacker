@@ -59,9 +59,9 @@ apt-get -yq install mysql-server apache2 mysql-server php5 php5-mysql libapache2
 
 # Configure mysql:
 if [[ !$MYSQL_USER ]] && [[ !$MYSQL_PW ]] && [[ !MYSQL_DB ]]; then
-	echo "CREATE USER '$MYSQL_USER'@'localhost' IDENTIFIED BY '$MYSQL_PW'" | mysql -uroot -p"$MYSQL_ROOTPW"
+	echo "CREATE USER \'$MYSQL_USER\'@'localhost' IDENTIFIED BY \'$MYSQL_PW\'" | mysql -uroot -p"$MYSQL_ROOTPW"
 	echo "CREATE DATABASE $MYSQL_DB" | mysql -uroot -p"$MYSQL_ROOTPW"
-	echo "GRANT ALL ON $MYSQL_DB.* TO '$MYSQL_USER'@'localhost'" | mysql -uroot -p"$MYSQL_ROOTPW"
+	echo "GRANT ALL ON $MYSQL_DB.* TO \'$MYSQL_USER\'@'localhost'" | mysql -uroot -p"$MYSQL_ROOTPW"
 	echo "flush privileges" | mysql -uroot -p"$MYSQL_ROOTPW"
 	
 	# RESTORE DB FROM SQL:
