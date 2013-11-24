@@ -2,6 +2,7 @@
 
 ########## 
 # Deploys a backup to the specified host over SSH:
+#  NOTE: This script is somewhat linked to the backup utilities in https://github.com/activescott/morebackup . Specifically backup-mysql.sh and sync-machine.sh .
 
 show_help () {
 	echo "Usage: restore-joomla-to-host.sh USER@HOST SOURCE_FILES SOURCE_DB MYSQL_DB MYSQL_PW"
