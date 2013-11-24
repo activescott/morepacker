@@ -58,7 +58,7 @@ debconf-set-selections <<< "mysql-server-5.5 mysql-server/root_password_again pa
 apt-get -yq install mysql-server apache2 mysql-server php5 php5-mysql libapache2-mod-php5 php5-gd
 
 # Configure mysql:
-if [[ !$MYSQL_USER ]] && [[ !$MYSQL_PW ]] && [[ !MYSQL_DB ]]; then
+if [[ $MYSQL_USER ]] && [[ $MYSQL_PW ]] && [[ $MYSQL_DB ]]; then
 	echo "Creating MySQL user..."
 	echo "CREATE USER '$MYSQL_USER'@'localhost' IDENTIFIED BY '$MYSQL_PW'" | mysql -uroot -p"$MYSQL_ROOTPW"
 	echo "Creating MySQL user complete."
