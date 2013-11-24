@@ -37,7 +37,10 @@
 	"variables": <%= to_json(base["variables"]) %>,
 	"builders": <%= to_json(base["builders"]) %>,
 	"provisioners": [
-		<% # Note: Using file+inline instead of normal scripts because provision_joomla needs other files in the same dir and need to pass args to other scripts %>
+		<% 
+			# Note: Using file+inline instead of normal scripts because provision_joomla needs other files in the same dir and need to pass args to other scripts 
+			# This could be done with script using execute_command & remote_path, not sure if that is better?
+		%>
 		{
 			"type": "file",
 			"source": "upload",

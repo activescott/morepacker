@@ -32,4 +32,4 @@ SUDO_USER=$1
 
 require_sudo
 
-echo \"$SUDO_USER        ALL=(ALL)       NOPASSWD: ALL\" >> /etc/sudoers
+echo "$SUDO_USER        ALL=(ALL)       NOPASSWD: ALL" | tee -a /etc/sudoers
